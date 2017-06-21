@@ -46,8 +46,12 @@ class Medoo
 
 	protected $debug_mode = false;
 
-	public function __construct($options = null, $externalPDO = null)
+	public function __construct($options = null, $externalPDO = null, $logger = null)
 	{
+		if (isset($logger)) {
+			$this->logger = $logger;
+		}
+
 		if(isset($externalPDO)) {
 			$this->pdo = $externalPDO;
 		} else {
@@ -154,8 +158,8 @@ class Medoo
 					$this->pdo->exec($value);
 				}
 			}
-			catch (PDOException $e) {
-				throw new Exception($e->getMessage());
+			catch (\Exception $e) {
+				throw new \Exception($e->getMessage());
 			}
 		}
 	}
@@ -173,7 +177,14 @@ class Medoo
 
 		$this->logs[] = $query;
 
-		return $this->pdo->query($query);
+		try {
+			return $this->pdo->query($query);
+		} catch (\Exception $e) {
+
+			if ($this->logger != null) {
+				$this->logger->error('MySQL error: '.$query);
+			}
+		}
 	}
 
 	public function exec($query)
@@ -189,7 +200,15 @@ class Medoo
 
 		$this->logs[] = $query;
 
-		return $this->pdo->exec($query);
+		try {
+			return $this->pdo->exec($query);
+		} catch (\Exception $e) {
+
+			if ($this->logger != null) {
+				$this->logger->error('MySQL error: '.$query);
+			}
+		}
+
 	}
 
 	public function quote($string)
