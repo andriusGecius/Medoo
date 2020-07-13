@@ -48,7 +48,7 @@ class Medoo
 
 	public function __construct($options = null, $externalPDO = null, $logger = null)
 	{
-		if (isset($logger)) {
+		if (empty($logger) === false) {
 			$this->logger = $logger;
 		}
 
@@ -181,7 +181,7 @@ class Medoo
 			return $this->pdo->query($query);
 		} catch (\Exception $e) {
 
-			if ($this->logger != null) {
+			if (empty($this->logger) === false) {
 				$this->logger->error('MySQL error: '.$query);
 			}
 		}
@@ -204,7 +204,7 @@ class Medoo
 			return $this->pdo->exec($query);
 		} catch (\Exception $e) {
 
-			if ($this->logger != null) {
+			if (empty($this->logger) === false) {
 				$this->logger->error('MySQL error: '.$query);
 			}
 		}
