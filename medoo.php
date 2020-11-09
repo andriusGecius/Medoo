@@ -48,6 +48,8 @@ class Medoo
 			$this->logger = $logger;
 		}
 
+		$this->charset = 'UTF8';
+
 		if(isset($externalPDO)) {
 			$this->pdo = $externalPDO;
 		} else {
