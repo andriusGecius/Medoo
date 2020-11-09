@@ -1297,6 +1297,8 @@ class Medoo
 							break;
 
 						case 'object':
+							$value = serialize($value);
+
 						case 'NULL':
 						case 'resource':
 						case 'boolean':
