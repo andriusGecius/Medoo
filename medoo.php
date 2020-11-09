@@ -89,7 +89,7 @@ class Medoo
 						$type = 'mysql';
 
 					case 'mysql':
-						if ($this->socket)
+						if (empty($this->socket) === false)
 						{
 							$dsn = $type . ':unix_socket=' . $this->socket . ';dbname=' . $this->database_name;
 						}
