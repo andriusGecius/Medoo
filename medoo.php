@@ -148,7 +148,7 @@ class Medoo
 					$dsn,
 					$this->username,
 					$this->password,
-					$this->option
+					(empty($this->option) === false ? $this->option : '')
 				);
 
 				foreach ($commands as $value)
