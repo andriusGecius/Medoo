@@ -210,7 +210,12 @@ class Medoo
 			$statement->bindValue($key, $value[ 0 ], $value[ 1 ]);
 		}
 
-		$execute = $statement->execute();
+		try {
+			$execute = $statement->execute();
+		} catch (Exception $e) {
+			//
+		}
+
 
 		$this->errorInfo = $statement->errorInfo();
 
